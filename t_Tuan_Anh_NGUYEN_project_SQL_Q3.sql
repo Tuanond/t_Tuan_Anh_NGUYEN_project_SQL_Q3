@@ -3,8 +3,10 @@
 
 SELECT 
 	cpc.name,
-	cp.*
+	cp.category_code,
+	round(avg(cp.value),2) AS average_value,
+	year(cp.date_from)
 FROM czechia_price AS cp
 LEFT JOIN czechia_price_category AS cpc
-	ON cp.category_code = cpc.code
-ORDER BY cp.date_from, cpc.name;
+	ON cp.category_code = cpc.code 
+GROUP BY cpc.name, year(cp.date_from);
